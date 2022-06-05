@@ -1,15 +1,11 @@
-import string
-from sprite_action import Action
-
 class Sprites:  #Esta classe irá "criar" as imagens dos personagens
 
     def __init__(self, choice):
-        self.__choice = choice
-
+       self.__choice = choice
 
     #FRASES
     @staticmethod
-    def nome():  #UESCGOTCHI
+    def titulo():  #UESCGOTCHI
         print("\n")
         print("██╗   ██╗███████╗███████╗ ██████╗ ██████╗  ██████╗ ████████╗ ██████╗██╗  ██╗██╗\n██║   ██║██╔════╝██╔════╝██╔════╝██╔════╝ ██╔═══██╗╚══██╔══╝██╔════╝██║  ██║██║\n██║   ██║█████╗  ███████╗██║     ██║  ███╗██║   ██║   ██║   ██║     ███████║██║\n██║   ██║██╔══╝  ╚════██║██║     ██║   ██║██║   ██║   ██║   ██║     ██╔══██║██║\n╚██████╔╝███████╗███████║╚██████╗╚██████╔╝╚██████╔╝   ██║   ╚██████╗██║  ██║██║\n ╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝  ╚═════╝    ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝")
 
@@ -19,17 +15,19 @@ class Sprites:  #Esta classe irá "criar" as imagens dos personagens
 
     @staticmethod
     #PERSONAGENS
-    def escolha_personagem():  # O personagem parado
+    def escolha_personagem(): 
         print("█████████       ▒▒▒▒▒▒▒       ▄████▄\n█▄█████▄█       ▒─▄▒─▄▒       ███▄█▀\n█▼▼▼▼▼          ▒▒▒▒▒▒▒       ████            \n█████████       ▒▒▒▒▒▒▒       █████▄\n ██ ██          ▒ ▒ ▒ ▒       ▀████▀\n FEBRIX         INIMIGO       PACMAN\n   (1)            (2)          (3)")
         print("\n")
         print("—"*50)
 
     #FEBRIX
     def febrix(self):  # O personagem parado
-        self.__choice = Action('parado')
+        self.var_febrix = "█████████\n█▄█████▄█\n█▼▼▼▼▼\n█████████\n ██ ██\n"
 
-        print("█████████       █████████\n█▄█████▄█       █▄█████▄█\n█▼▼▼▼▼          █▼▼▼▼▼\n█████████       █████████\n ██ ██           ██ ██\n")
+        return(self.var_febrix)
 
+    def febrix_comendo(self):
+        print("█████████\n█▄█████▄█\n█▼▼▼▼▼\n█  ██\n█▲▲▲▲▲\n█████████\n ██ ██\n")
 
     def febrix_ouvindo_musica(self):
         print("█████████  ╔═══╗♪\n█▄█████▄█  ║███║ ♫\n█▼▼▼▼▼     ║(●)║♫\n█████████  ╚═══╝ ♪\n ██ ██")
@@ -49,3 +47,12 @@ class Sprites:  #Esta classe irá "criar" as imagens dos personagens
 
     def pacman_comendo(self):
         print("▄████▄\n███▄█▀\n████     █     █\n█████▄\n ▀████▀")
+
+
+    def menu_personagens(self, opcao):
+        self.opcao = opcao
+        match self.opcao:
+            case 1:
+                print(self.var_febrix)
+            case 2:
+                print()

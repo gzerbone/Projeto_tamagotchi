@@ -1,15 +1,27 @@
-from teste_sprite import Sprites
-from sprite_action import Action
-
+from sprite import Sprites
+from eventos import Tamagotchi
 
 personagem = Sprites(1)
-personagem = Sprites.escolha_frase()
+virtual_pet = Tamagotchi('Febrix')
 
-#Escolha do personagem
-choice = input("-->") 
+virtual_pet.alimentar()
 
-#Print pedindo para escolha o personagem
-personagem = Sprites.escolha_personagem() 
 
-#fazer condição se a pessoa digitar uma string dar um erro
+escolhaDoPersonagem = input("->")
+
+#Utilizando Associação
+if escolhaDoPersonagem == 1:
+    pass
+
+
+if escolhaDoPersonagem == 2:
+    pass
+
+
+if escolhaDoPersonagem == 3:
+    pass
+#condições de escolha do personagem:
+#se personagem == 1 entao o programa inteiro será baseado em febrix
+#se personagem == 2 entao o programa inteiro será baseado em inimigo_pacman
+#se personagem == 3 entao o programa inteiro será baseado em pacman()
 
