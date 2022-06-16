@@ -1,11 +1,11 @@
 from sprites import Sprites
 import os
 
-
 class Tamagotchi:
     def __init__(self, nome:str = None, opcao:int = None):
         self.__nome = nome
         self.virtual_pet = Sprites(opcao)
+
         self.__alimentacao = 30
         self.__felicidade = 100
         self.__saude = 100
@@ -13,8 +13,8 @@ class Tamagotchi:
         self.__energia = 100
         self.__level = 0
         self.__xp = 0
-        self.i = 0
 
+#GETTERS
     @property
     def nome(self):
         return self.__nome
@@ -47,6 +47,7 @@ class Tamagotchi:
     def xp(self):
         return self.__xp  
 
+#AUXILIARES
     def subirXP(self):
         limite = 100
         level_max = 10
@@ -110,6 +111,7 @@ class Tamagotchi:
                 self.__felicidade -= 30
                 self.__alimentacao -= 30
         
+#EVENTOS
     def alimentar(self):
         if self.alimentacao == 100:
             print(f'{self.nome} não está com fome')
@@ -153,6 +155,7 @@ class Tamagotchi:
     def morrer(self):
         return exit('Game-Over')
 
+#IMPRESSÃO DE DADOS
     def imprimirDados(self):
         print(f'Level: {self.level} e XP: {self.xp}')
         print(f'Alimentação: {self.alimentacao}%')
@@ -161,6 +164,7 @@ class Tamagotchi:
         print(f'Higiene: {self.higiene}%')
         print(f'Energia: {self.energia}%')
 
+#
     def event(self, opcao = None):
         if opcao == 1:
             self.alimentar()
