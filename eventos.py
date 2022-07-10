@@ -1,11 +1,19 @@
-from sprites import Sprites
 import os
+from xmlrpc.client import boolean
+
+from numpy import bool_
+from spritess import *
 
 class Tamagotchi:
-    def __init__(self, nome:str = None, opcao:int = None):
-        self.__nome = nome
-        self.virtual_pet = Sprites(opcao)
+    def __init__(self, nome:str = 'Buzz', opcao:int = None) -> None:
+        if opcao == 1:
+            self.virtual_pet = Febrix()
+        elif opcao == 2:
+            self.virtual_pet = Fantasminha()
+        elif opcao == 3:
+            self.virtual_pet = Pacman()
 
+        self.__nome = nome
         self.__alimentacao = 30
         self.__felicidade = 100
         self.__saude = 100
@@ -14,7 +22,6 @@ class Tamagotchi:
         self.__level = 0
         self.__xp = 0
 
-#GETTERS
     @property
     def nome(self):
         return self.__nome
@@ -47,7 +54,6 @@ class Tamagotchi:
     def xp(self):
         return self.__xp  
 
-#AUXILIARES
     def subirXP(self):
         limite = 100
         level_max = 10
@@ -57,13 +63,18 @@ class Tamagotchi:
                 self.__level += 1
                 self.__xp = 0
                 limite += 50
-            pass
 
-    def alteraAtributos(self, atributo):
+    def verificaEstadoAtual(self) -> bool: #verificar se ele morreu já antees da iteração, pois tava dando erro(explicar a zerbs, n esquece)
+        if (self.__alimentacao <= 0) or (self.__felicidade <= 0) or (self.__saude <= 0) or (self.__higiene <= 0) or (self.__energia <= 0):
+            return False #caso algum dos atributos tenha zerado, retorna false 
+        else:
+            return True
+
+    def alteraAtributos(self, atributo:str) -> None:
         if atributo == 'alimentacao':
-            if self.__alimentacao <= 0:
+            if self.verificaEstadoAtual() == False:
                 self.morrer()
-            elif self.__alimentacao >= 100:
+            elif self.__alimentacao > 100:
                 self.__alimentacao = 100
             else:
                 self.__alimentacao += 10
@@ -71,9 +82,9 @@ class Tamagotchi:
                 self.__higiene -= 5
         
         elif atributo == 'felicidade':
-            if self.__felicidade <= 0:
+            if self.verificaEstadoAtual() == False:
                 self.morrer()
-            elif self.__felicidade >= 100:
+            elif self.__felicidade > 100:
                 self.__felicidade = 100
             else:
                 self.__felicidade += 15
@@ -82,9 +93,9 @@ class Tamagotchi:
                 self.__higiene -= 20
 
         elif atributo == 'saude':
-            if self.__saude <= 0:
+            if self.verificaEstadoAtual() == False:
                 self.morrer()
-            elif self.__saude >= 100:
+            elif self.__saude > 100:
                 self.__saude = 100
             else:
                 self.__saude += 30
@@ -92,7 +103,7 @@ class Tamagotchi:
                 self.__energia += 30
 
         elif atributo == 'higiene':
-            if self.__higiene <= 0:
+            if self.verificaEstadoAtual() == False:
                 self.morrer()
             elif self.__higiene >= 100:
                 self.__higiene = 100
@@ -102,7 +113,7 @@ class Tamagotchi:
                 self.__energia -= 10
 
         elif atributo == 'energia':
-            if self.__energia <= 0:
+            if self.verificaEstadoAtual() == False:
                 self.morrer()
             elif self.__energia >= 100:
                 self.__energia = 100
@@ -110,9 +121,8 @@ class Tamagotchi:
                 self.__energia = 100
                 self.__felicidade -= 30
                 self.__alimentacao -= 30
-        
-#EVENTOS
-    def alimentar(self):
+
+    def alimentar(self) -> None:
         if self.alimentacao == 100:
             print(f'{self.nome} não está com fome')
         else:
@@ -120,7 +130,7 @@ class Tamagotchi:
             self.alteraAtributos('alimentacao')
             self.subirXP()
     
-    def brincar(self):
+    def brincar(self) -> None:
         if self.felicidade == 100:
             print(f'{self.nome} ja brincou demais por hoje, tente mais tarde!')
         else:
@@ -128,7 +138,7 @@ class Tamagotchi:
             self.alteraAtributos('felicidade')
             self.subirXP()
 
-    def curar(self):
+    def curar(self) -> None:
         if self.saude > 60:
             print(f'{self.nome} não precisa de medicamentos, ele está saudável')
         else:
@@ -136,7 +146,7 @@ class Tamagotchi:
             self.alteraAtributos('saude')
             self.subirXP()
 
-    def limpar(self):
+    def limpar(self) -> None:
         if self.higiene >= 60:
             print(f'{self.nome} já está limpo, poupe a água do planeta! :)')
         else:
@@ -144,7 +154,7 @@ class Tamagotchi:
             self.alteraAtributos('higiene')
             self.subirXP()
     
-    def dormir(self):
+    def dormir(self) -> None:
         if self.energia >= 60:
             print(f'{self.nome} não está com sono, aproveite-o e entretenha-o!')
         else:
@@ -152,20 +162,20 @@ class Tamagotchi:
             self.alteraAtributos('energia')
             self.subirXP()
 
-    def morrer(self):
-        return exit('Game-Over')
+    def morrer(self) -> None:
+        exit('Game-Over, Jogador!')
 
-#IMPRESSÃO DE DADOS
-    def imprimirDados(self):
-        print(f'Level: {self.level} e XP: {self.xp}')
-        print(f'Alimentação: {self.alimentacao}%')
-        print(f'Diversão: {self.felicidade}%')
-        print(f'Saúde: {self.saude}%')
-        print(f'Higiene: {self.higiene}%')
-        print(f'Energia: {self.energia}%')
+    def imprimirDados(self) -> None:
+        print(f'Nome: {self.nome}')
+        print(f'LEVEL: {self.level} e XP: {self.xp}')
+        print(f'ALIMENTAÇÃO: {self.alimentacao}%')
+        print(f'DIVERSÃO: {self.felicidade}%')
+        print(f'SAÚDE: {self.saude}%')
+        print(f'HIGIENE: {self.higiene}%')
+        print(f'ENERGIA: {self.energia}%')
+        print('\n')
 
-#
-    def event(self, opcao = None):
+    def event(self, opcao = 0) -> None:
         if opcao == 1:
             self.alimentar()
             self.imprimirDados()
