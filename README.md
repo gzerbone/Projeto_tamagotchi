@@ -1,7 +1,5 @@
 # Projeto_tamagotchi
 
-Inspired by [dannyfritz/commit-message-emoji](https://github.com/dannyfritz/commit-message-emoji)
-
 |   Commit type              | Emoji                                         |
 |:---------------------------|:----------------------------------------------|
 | Initial commit             | :tada: `:tada:`                               |
